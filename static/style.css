@@ -1,0 +1,471 @@
+/* Importação das fontes do Google Fonts */
+@import url('https://fonts.googleapis.com/css2?family=VT323&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@400;700&display=swap');
+
+:root {
+    /* Cores Tech */
+    --tech-dark-blue: #0A192F;
+    --tech-blue: #007BFF;
+    --tech-green: #00FFD1; /* Neon green/cyan */
+    --tech-purple: #8A2BE2; /* Um toque de roxo elétrico */
+    --tech-gray: #B0B0B0;
+    --tech-light-gray: #E0E0E0;
+    --tech-bg-dark: #070D18; /* Fundo bem escuro */
+    --tech-border-glow: rgba(0, 255, 209, 0.5); /* Brilho do neon */
+}
+
+body {
+    font-family: 'Roboto Mono', monospace;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    margin: 0;
+    background-color: var(--tech-bg-dark);
+    color: var(--tech-light-gray);
+    overflow: hidden;
+
+    /* NOVAS PROPRIEDADES PARA O EFEITO DE LUZ */
+    background-image:
+        radial-gradient(circle at 10% 10%, var(--tech-green) 0%, transparent 60%), /* Círculo no canto superior esquerdo */
+        radial-gradient(circle at 90% 90%, var(--tech-purple) 0%, transparent 60%); /* Círculo no canto inferior direito */
+    background-size: cover; /* Faz com que as luzes se espalhem por toda a área */
+    background-repeat: no-repeat;
+    /* A animação backgroundGlow fará as luzes se moverem um pouco */
+    animation: backgroundGlow 15s infinite alternate ease-in-out; /* Ajustei o tempo e a easing */
+}
+
+@keyframes backgroundGlow {
+    0% { background-position: 0% 0%, 100% 100%; } /* Posição inicial */
+    50% { background-position: 20% 0%, 80% 100%; } /* Move um pouco o superior esquerdo para a direita, e o inferior direito para a esquerda */
+    100% { background-position: 0% 0%, 100% 100%; } /* Volta para a posição inicial */
+}
+
+.main-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 100vh;
+}
+
+.chat-container {
+    width: 90vw;           /* <-- Altere aqui de 60vw para 80vw */
+    max-width: 2000px;     /* (Opcional) aumente o limite máximo se desejar */
+    min-width: 320px;
+    background-color: var(--tech-dark-blue); /* Fundo do chat */
+    border-radius: 8px; /* Bordas um pouco mais nítidas */
+    border: 1px solid var(--tech-green); /* Borda neon */
+    box-shadow: 0 0 25px var(--tech-border-glow), inset 0 0 10px rgba(0, 255, 209, 0.2); /* Sombra e brilho internos */
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    min-height: 550px; /* Altura mínima do chat */
+    max-height: 90vh; /* Limita a altura máxima do chat */
+    transform: scale(0.98);
+    animation: fadeInScale 0.5s ease-out forwards;
+    position: relative; /* Para linhas de grade */
+}
+
+/* Efeito de grade no fundo do chat-container */
+.chat-container::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-image:
+        linear-gradient(0deg, transparent 24%, var(--tech-blue) 25%, var(--tech-blue) 26%, transparent 27%, transparent 74%, var(--tech-blue) 75%, var(--tech-blue) 76%, transparent 77%, transparent),
+        linear-gradient(90deg, transparent 24%, var(--tech-blue) 25%, var(--tech-blue) 26%, transparent 27%, transparent 74%, var(--tech-blue) 75%, var(--tech-blue) 76%, transparent 77%, transparent);
+    background-size: 50px 50px; /* Tamanho da célula da grade */
+    opacity: 0.05; /* Transparência para o efeito de grade */
+    pointer-events: none; /* Garante que não interfira com interações */
+    z-index: 0;
+}
+
+
+@keyframes fadeInScale {
+    from {
+        opacity: 0;
+        transform: scale(0.9);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+.chat-header {
+    background-color: var(--tech-blue); /* Cabeçalho azul tech */
+    color: white;
+    padding: 15px 20px;
+    text-align: center;
+    font-size: 1.3em;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
+    font-family: 'VT323', monospace; /* Fonte do cabeçalho */
+    text-shadow: 0 0 5px var(--tech-green); /* Brilho no texto do cabeçalho */
+}
+
+.chat-header h2 {
+    margin: 0;
+    font-weight: 400;
+    letter-spacing: 2px; /* Espaçamento entre letras */
+}
+
+.status-indicator {
+    width: 12px; /* Um pouco maior */
+    height: 12px;
+    border-radius: 50%;
+    background-color: #FFC107; /* Amarelo para offline/conectando */
+    position: absolute;
+    right: 20px;
+    top: 50%;
+    transform: translateY(-50%);
+    box-shadow: 0 0 8px #FFC107, 0 0 15px rgba(255, 193, 7, 0.4); /* Brilho no indicador */
+    animation: pulse 1.5s infinite;
+}
+
+.status-indicator.online {
+    background-color: var(--tech-green); /* Verde neon para online */
+    box-shadow: 0 0 8px var(--tech-green), 0 0 15px rgba(0, 255, 209, 0.4);
+}
+
+@keyframes pulse {
+    0% { transform: translateY(-50%) scale(1); opacity: 1; }
+    50% { transform: translateY(-50%) scale(1.15); opacity: 0.7; }
+    100% { transform: translateY(-50%) scale(1); opacity: 1; }
+}
+
+
+.chat-box {
+    flex-grow: 1;
+    padding: 20px;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    background-color: var(--tech-dark-blue); /* Fundo do chat-box */
+    position: relative; /* Para garantir que as mensagens fiquem acima da grade */
+    z-index: 1;
+}
+
+/* Estilo para a barra de rolagem (Chrome/Edge/Safari) */
+.chat-box::-webkit-scrollbar {
+    width: 8px;
+}
+
+.chat-box::-webkit-scrollbar-track {
+    background: #0D2642; /* Trilha escura */
+    border-radius: 10px;
+}
+
+.chat-box::-webkit-scrollbar-thumb {
+    background: var(--tech-blue); /* Polegar azul */
+    border-radius: 10px;
+    border: 1px solid var(--tech-green); /* Borda neon */
+}
+
+.chat-box::-webkit-scrollbar-thumb:hover {
+    background: var(--tech-purple); /* Roxo ao passar o mouse */
+}
+
+
+.message {
+    display: flex;
+    align-items: flex-start;
+    padding: 12px 18px;
+    border-radius: 8px; /* Bordas mais nítidas */
+    max-width: 75%;
+    word-wrap: break-word;
+    position: relative;
+    font-size: 0.9em; /* Um pouco menor */
+    line-height: 1.4;
+    transition: all 0.3s ease-out; /* Transição para efeitos futuros */
+    background-color: rgba(0, 0, 0, 0.2); /* Fundo sutil para mensagens */
+    border: 1px solid rgba(0, 255, 209, 0.1); /* Borda sutil de brilho */
+}
+
+.avatar {
+    width: 40px; /* Um pouco maior */
+    height: 40px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-right: 10px;
+    border: 2px solid var(--tech-green); /* Borda neon no avatar */
+    box-shadow: 0 0 8px rgba(0, 255, 209, 0.6); /* Brilho no avatar */
+}
+
+.message-content {
+    flex-grow: 1;
+    overflow-wrap: break-word;
+    white-space: pre-wrap;
+    color: var(--tech-light-gray); /* Texto claro */
+}
+
+.user-message {
+    align-self: flex-end;
+    background-color: rgba(0, 123, 255, 0.2); /* Fundo do usuário com transparência */
+    border: 1px solid var(--tech-blue); /* Borda azul */
+    margin-left: auto;
+    justify-content: flex-end;
+    box-shadow: 0 0 10px rgba(0, 123, 255, 0.3); /* Brilho azul */
+}
+
+.user-message .avatar {
+    order: 2;
+    margin-left: 10px;
+    margin-right: 0;
+    border: 2px solid var(--tech-purple); /* Avatar do usuário com roxo */
+    box-shadow: 0 0 8px rgba(138, 43, 226, 0.6);
+}
+
+
+.bot-message {
+    align-self: flex-start;
+    background-color: rgba(0, 255, 209, 0.1); /* Fundo do bot com transparência */
+    border: 1px solid var(--tech-green); /* Borda verde neon */
+    margin-right: auto;
+    box-shadow: 0 0 10px var(--tech-border-glow); /* Brilho verde neon */
+}
+
+
+.chat-input {
+    display: flex;
+    padding: 15px 20px;
+    border-top: 1px solid var(--tech-blue); /* Borda superior azul */
+    background-color: var(--tech-dark-blue);
+    align-items: center;
+    box-shadow: inset 0 5px 15px rgba(0, 0, 0, 0.3); /* Sombra interna */
+}
+
+.chat-input input {
+    flex-grow: 1;
+    padding: 12px 18px;
+    border: 1px solid var(--tech-blue);
+    border-radius: 5px; /* Menos arredondado */
+    margin-right: 10px;
+    font-size: 0.95em;
+    outline: none;
+    background-color: var(--tech-dark-blue); /* Fundo do input */
+    color: var(--tech-green); /* Texto do input verde neon */
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+    font-family: 'Roboto Mono', monospace;
+}
+
+.chat-input input::placeholder {
+    color: var(--tech-gray); /* Placeholder cinza */
+    opacity: 0.7;
+}
+
+.chat-input input:focus {
+    border-color: var(--tech-green);
+    box-shadow: 0 0 12px var(--tech-border-glow), inset 0 0 5px var(--tech-border-glow);
+}
+
+.chat-input button {
+    background: var(--tech-blue); /* Botão azul */
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    border-radius: 5px; /* Botão quadrado/arredondado */
+    cursor: pointer;
+    font-size: 1em;
+    width: 50px; /* Tamanho fixo para o botão */
+    height: 50px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
+    transition: background-color 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease;
+}
+
+.chat-input button:hover {
+    background-color: var(--tech-purple); /* Roxo ao passar o mouse */
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.5), 0 0 15px var(--tech-purple); /* Brilho roxo no hover */
+}
+
+.chat-input button svg {
+    width: 28px; /* Ícone um pouco maior */
+    height: 28px;
+    fill: var(--tech-light-gray); /* Cor do ícone */
+}
+
+/* Estilo para o cursor de digitação */
+.typing-cursor {
+    display: inline-block;
+    width: 2px;
+    height: 1em;
+    background-color: var(--tech-green); /* Cursor neon green */
+    animation: blink-caret 0.75s step-end infinite;
+    vertical-align: middle;
+    margin-left: 2px;
+    box-shadow: 0 0 5px var(--tech-green); /* Brilho no cursor */
+}
+
+@keyframes blink-caret {
+    from, to { background-color: transparent }
+    50% { background-color: var(--tech-green); }
+}
+
+/* Negrito e Itálico com cores tech */
+.message-content b,
+.message-content strong {
+    font-weight: 700;
+    color: var(--tech-green); /* Negrito verde neon */
+    text-shadow: 0 0 5px rgba(0, 255, 209, 0.5); /* Brilho sutil no negrito */
+}
+
+.message-content i,
+.message-content em {
+    font-style: italic;
+    color: var(--tech-purple); /* Itálico roxo elétrico */
+    text-shadow: 0 0 5px rgba(138, 43, 226, 0.5);
+}
+
+.message-content a {
+    color: var(--tech-light-gray); /* Links mais discretos */
+    text-decoration: underline;
+    font-weight: 500;
+}
+
+.message-content a:hover {
+    color: var(--tech-green); /* Links verde neon no hover */
+    text-decoration: underline;
+}
+
+/* --- Estilização para Códigos --- */
+
+/* Código Inline */
+.message-content code {
+    background-color: rgba(0, 255, 209, 0.1); /* Fundo sutil */
+    color: var(--tech-green); /* Cor do texto do código */
+    padding: 2px 5px;
+    border-radius: 4px;
+    font-family: 'Roboto Mono', monospace; /* Garante a fonte mono */
+    font-size: 0.9em; /* Um pouco menor para inline */
+    border: 1px solid rgba(0, 255, 209, 0.2);
+    white-space: nowrap; /* Impede quebras de linha em código inline */
+}
+
+/* Blocos de Código (pre) */
+.message-content pre {
+    background-color: rgba(0, 0, 0, 0.4);
+    color: var(--tech-green);
+    padding: 10px 15px;
+    border-radius: 8px;
+    margin: 10px 0;
+    overflow-x: auto; /* ADICIONA rolagem horizontal */
+    white-space: pre; /* Mantém a formatação do código */
+    border: 1px solid var(--tech-blue);
+    box-shadow: inset 0 0 10px rgba(0, 123, 255, 0.2);
+    font-family: 'Roboto Mono', monospace;
+    font-size: 0.85em;
+    line-height: 1.4;
+    position: relative;
+    z-index: 2;
+    max-width: 100%; /* Garante que o pre não seja maior que o pai */
+}
+
+
+/* Garante que o código dentro do pre também tenha as cores */
+.message-content pre code {
+    display: block; /* Ocupa a largura total do pre */
+    background: none;
+    border: none;
+    padding: 0;
+    white-space: pre; /* IMPORTANTE: Manter para preservar a formatação */
+    color: inherit;
+    word-break: normal; /* Impede a quebra de palavras longas dentro do código */
+}
+
+/* Estilo para a barra de rolagem de código (se aparecer) */
+.message-content pre::-webkit-scrollbar {
+    height: 6px;
+    width: 6px;
+}
+
+.message-content pre::-webkit-scrollbar-track {
+    background: rgba(0, 0, 0, 0.3);
+    border-radius: 5px;
+}
+
+.message-content pre::-webkit-scrollbar-thumb {
+    background: var(--tech-blue);
+    border-radius: 5px;
+}
+
+.message-content pre::-webkit-scrollbar-thumb:hover {
+    background: var(--tech-purple);
+}
+
+/* Estilo para números de linha (exige JS ou biblioteca adicional) */
+/* .message-content pre::before {
+    content: attr(data-line-numbers); // Exemplo para números de linha
+    position: absolute;
+    left: 5px;
+    top: 5px;
+    color: rgba(255, 255, 255, 0.3);
+    font-size: 0.7em;
+} */
+ 
+.code-block-wrapper {
+    position: relative;
+    max-width: 100%;
+    width: 100%;
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    display: block;
+}
+
+/* Garante que o pre não ultrapasse o wrapper */
+.code-block-wrapper pre {
+    max-width: 100%;
+    width: 100%;
+    box-sizing: border-box;
+    overflow-x: auto;
+}
+
+.copy-button {
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    background-color: rgba(0, 123, 255, 0.6);
+    color: white;
+    border: 1px solid var(--tech-blue);
+    border-radius: 4px;
+    padding: 4px 8px;
+    font-size: 0.75em;
+    cursor: pointer;
+    opacity: 0;
+    transition: opacity 0.3s ease, background-color 0.3s ease;
+    font-family: 'Roboto Mono', monospace;
+    z-index: 10;
+}
+
+.code-block-wrapper:hover .copy-button {
+    opacity: 1;
+}
+
+/* Estilo para a mensagem de feedback (ex: "Copiado!") */
+.copy-feedback {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: rgba(0, 0, 0, 0.7);
+    color: var(--tech-green);
+    padding: 8px 12px;
+    border-radius: 5px;
+    font-size: 0.8em;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    pointer-events: none; /* Garante que não bloqueie cliques */
+    z-index: 11; /* Acima do botão */
+}

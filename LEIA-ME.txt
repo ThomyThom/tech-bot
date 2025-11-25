@@ -1,0 +1,3 @@
+Para executar o chatbot execute o arquivo "install.bat" e aguarde até que uma aba no seu navegador seja aberta.
+
+Made By: Thomaz André.
