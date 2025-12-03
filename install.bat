@@ -9,10 +9,10 @@ pip install google-generativeai
 pip install Flask nltk
 start activate_ambiente
 timeout /t 10 /nobreak >nul
-cls 
 :Menu
+cls
 echo Configurando API Gemini
-echo É necessário uma Chave de API para concluir a ativação do ChatBot
+echo Eh necessario uma Chave de API para concluir a ativacao do ChatBot
 echo Acesse https://aistudio.google.com/ para adquirir uma API gratuitamente
 echo.
 echo Digite 1 para abrir o site e adquirir uma API key.
@@ -20,12 +20,13 @@ echo.
 
 set /p GOOGLE_API_KEY="Digite sua API KEY: "
 
-if "%GOOGLE_API_KEY%"=="1" goto API
-
+if "%GOOGLE_API_KEY%"=="1" (goto API) else (goto Continue)
 :API
+cls
 start "Tech AI Chatbot" /b "https://aistudio.google.com/" --new-tab
 goto Menu
 
+:Continue
 cls
 echo Timer para abrir o navegador
 start aba
